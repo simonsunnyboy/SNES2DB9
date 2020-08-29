@@ -134,7 +134,7 @@ uint16_t SNESReader_Update ( SNESReader * self )
 			self->shiftreg |= 1;
 		}
 	}
-
+  
 	/* go to next state: */
 	if ( self->state < READER_ST_IDLE )
 	{

@@ -17,7 +17,7 @@
 
 #include <stdint.h>
 
-#ifdef _cplusplus
+#ifdef __cplusplus
 extern "C"
 {
 #endif
@@ -84,7 +84,7 @@ extern "C"
 
 	void DB9_SetPins ( uint8_t state, SNES2DB9_SetPinFunc setfunc );
 
-#ifdef _cplusplus
+#ifdef __cplusplus
 }
 #endif
 
