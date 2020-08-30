@@ -165,8 +165,8 @@ int main(int argc, char **argv)
     
     UT_TESTCASE("Reading defined pattern A");
     
-    UT_PRECONDITION(unittest_pinpattern == (SNES_BTNMASK_B|SNES_BTNMASK_L));    
-    UT_PRECONDITION(unittest_nr_read_pins == 0);
+    UT_PRECONDITION(unittest_pinpattern = (SNES_BTNMASK_B|SNES_BTNMASK_L));
+    UT_PRECONDITION(unittest_nr_read_pins = 0);
     SNESReader_BeginRead(&reader);
             
     for(idx = 0; idx < 40; idx++)
@@ -176,6 +176,20 @@ int main(int argc, char **argv)
 	
 	UT_TEST(result == (SNES_BTNMASK_B|SNES_BTNMASK_L));
 	UT_TEST(unittest_nr_read_pins == 16);
+
+    UT_TESTCASE("Reading defined pattern B");
+
+    UT_PRECONDITION(unittest_pinpattern = (SNES_BTNMASK_Up));
+    UT_PRECONDITION(unittest_nr_read_pins = 0);
+    SNESReader_BeginRead(&reader);
+
+    for(idx = 0; idx < 40; idx++)
+    {
+        result = SNESReader_Update(&reader);
+    }
+
+    UT_TEST(result == (SNES_BTNMASK_Up));
+    UT_TEST(unittest_nr_read_pins == 16);
 
 	UT_END();
 
