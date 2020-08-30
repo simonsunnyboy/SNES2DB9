@@ -31,9 +31,11 @@ if(CMAKE_COMPILER_IS_GNUCXX)
     setup_target_for_coverage(test_snes2reader_coverage test_snes2reader coverage)
 endif()
 
+set(COMMONLIBDIR ${PROJECT_SOURCE_DIR}/../code/common)
+
 include_directories(
-    ${PROJECT_SOURCE_DIR}/code/common
-    ${PROJECT_SOURCE_DIR}
+    ${COMMONLIBDIR}
+    ${PROJECT_SOURCE_DIR}/framework
 )
 
 # the unittest framework library to link with project
@@ -44,8 +46,8 @@ add_library(unittest
 
 # an example test object with implemented unittest
 add_executable(test_snes2reader
-	${PROJECT_SOURCE_DIR}/code/common/snes2db9.h
-	${PROJECT_SOURCE_DIR}/code/common/snes2db9_reader.c
+	${COMMONLIBDIR}/snes2db9.h
+	${COMMONLIBDIR}/snes2db9_reader.c
     test_snes2reader.c
 )
 target_link_libraries(test_snes2reader unittest -lgcov)
