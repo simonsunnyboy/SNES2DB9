@@ -9,7 +9,7 @@
 # PC based unittest of common core code
 #
 cmake_minimum_required(VERSION 2.8)
-project(Unittest)
+project(Unittest_SNES2DB9)
 
 if( NOT CMAKE_BUILD_TYPE )
   set( CMAKE_BUILD_TYPE Coverage CACHE STRING

@@ -128,8 +128,8 @@ uint16_t SNESReader_Update ( SNESReader * self )
 	{
 		SNES2DB9_Pinstate DATA = self->getpin ( SNES_DATA );
 
-		/* update date shift regisetr depending on data read: */
-		if ( DATA == SNES2DB9_PIN_HIGH )
+        /* update date shift register depending on data read: */
+        if ( DATA == SNES2DB9_PIN_LOW )
 		{
 			self->shiftreg |= 1;
 		}
