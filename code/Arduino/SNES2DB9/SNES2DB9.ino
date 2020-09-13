@@ -33,7 +33,7 @@ static uint8_t pin_id[] =
     [DB9_DOWN] = 8,
     [DB9_LEFT] = 9,
     [DB9_RIGHT] = 10,
-    [DB9_FIRE] = 11
+    [DB9_FIRE] = 12
 };
 
 /**
