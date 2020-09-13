@@ -28,7 +28,7 @@ set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR})
 if(CMAKE_COMPILER_IS_GNUCXX)
     include(CodeCoverage)
     message("coverage target created...")
-    setup_target_for_coverage(test_snes2reader_coverage test_snes2reader coverage)
+	setup_target_for_coverage(test_snes2reader_coverage test_snes2reader test_setdb9 coverage)
 endif()
 
 set(COMMONLIBDIR ${PROJECT_SOURCE_DIR}/../code/common)
@@ -44,10 +44,20 @@ add_library(unittest
 	${PROJECT_SOURCE_DIR}/framework/unittest.h
 )
 
-# an example test object with implemented unittest
+# an example test object with implemented unittest for the SNESReader class
 add_executable(test_snes2reader
 	${COMMONLIBDIR}/snes2db9.h
 	${COMMONLIBDIR}/snes2db9_reader.c
     test_snes2reader.c
 )
 target_link_libraries(test_snes2reader unittest -lgcov)
+
+# an example test object with implemented unittest for the DB9_SetPin class
+add_executable(test_setdb9
+	${COMMONLIBDIR}/snes2db9.h
+	${COMMONLIBDIR}/snes2db9_setdb9.c
+	test_setdb9.c
+)
+target_link_libraries(test_setdb9 unittest -lgcov)
+
+
