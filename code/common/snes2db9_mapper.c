@@ -32,7 +32,7 @@ static void ComputeAutofireState ( SNESMapper * self, uint16_t millis_passed )
 		if ( self->millis >= self->autofire_cycletime_millis )
 		{
 			self->millis -= self->autofire_cycletime_millis;
-			self->autofire_active ^= self->autofire_active;
+            self->autofire_active = !self->autofire_active;
 		}
 	}
 }
