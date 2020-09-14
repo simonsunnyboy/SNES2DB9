@@ -30,6 +30,7 @@ if(CMAKE_COMPILER_IS_GNUCXX)
     message("coverage target created...")
 	setup_target_for_coverage(test_snes2reader_coverage test_snes2reader coverage)
 	setup_target_for_coverage(test_setdb9_coverage test_setdb9 coverage)
+	setup_target_for_coverage(test_mapper_coverage test_mapper coverage)
 endif()
 
 set(COMMONLIBDIR ${PROJECT_SOURCE_DIR}/../code/common)
@@ -60,5 +61,13 @@ add_executable(test_setdb9
 	test_setdb9.c
 )
 target_link_libraries(test_setdb9 unittest -lgcov)
+
+# an example test object with implemented unittest for the SNESMapper class
+add_executable(test_mapper
+	${COMMONLIBDIR}/snes2db9.h
+	${COMMONLIBDIR}/snes2db9_mapper.c
+	test_mapper.c
+)
+target_link_libraries(test_mapper unittest -lgcov)
 
 

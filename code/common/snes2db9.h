@@ -16,6 +16,7 @@
 #define SNES2DB9_H
 
 #include <stdint.h>
+#include <stdbool.h>
 
 #ifdef __cplusplus
 extern "C"
@@ -41,48 +42,75 @@ extern "C"
 #define DB9_BTNMASK_Right    8
 #define DB9_BTNMASK_Fire     128
 
-	enum SNES2DB9_Pinstate
-	{
-		SNES2DB9_PIN_LOW,
-		SNES2DB9_PIN_HIGH
-	};
+#define AUTOFIRE_CYCLETIME_IN_MS 100
 
-	typedef enum SNES2DB9_Pinstate SNES2DB9_Pinstate;
+enum SNES2DB9_Pinstate
+{
+	SNES2DB9_PIN_LOW,
+	SNES2DB9_PIN_HIGH
+};
 
-	enum SNES2DB9_Pin
-	{
-		SNES_LATCH,
-		SNES_CLK,
-		SNES_DATA,
-		DB9_UP,
-		DB9_DOWN,
-		DB9_LEFT,
-		DB9_RIGHT,
-		DB9_FIRE
-	};
+typedef enum SNES2DB9_Pinstate SNES2DB9_Pinstate;
 
-	typedef enum SNES2DB9_Pin SNES2DB9_Pin;
+enum SNES2DB9_Pin
+{
+	SNES_LATCH,
+	SNES_CLK,
+	SNES_DATA,
+	DB9_UP,
+	DB9_DOWN,
+	DB9_LEFT,
+	DB9_RIGHT,
+	DB9_FIRE
+};
 
-	typedef void ( *SNES2DB9_SetPinFunc ) ( SNES2DB9_Pin pin, SNES2DB9_Pinstate state );
+typedef enum SNES2DB9_Pin SNES2DB9_Pin;
 
-	typedef SNES2DB9_Pinstate ( *SNES2DB9_ReadPinFunc ) ( SNES2DB9_Pin pin );
+typedef void ( *SNES2DB9_SetPinFunc ) ( SNES2DB9_Pin pin, SNES2DB9_Pinstate state );
 
-	struct SNESReader
-	{
-		SNES2DB9_SetPinFunc  setpin;
-		SNES2DB9_ReadPinFunc getpin;
-		uint16_t             shiftreg;
-		uint16_t             result;
-		uint8_t              state;
-	};
+typedef SNES2DB9_Pinstate ( *SNES2DB9_ReadPinFunc ) ( SNES2DB9_Pin pin );
 
-	typedef struct SNESReader SNESReader;
+struct SNESReader
+{
+	SNES2DB9_SetPinFunc  setpin;
+	SNES2DB9_ReadPinFunc getpin;
+	uint16_t             shiftreg;
+	uint16_t             result;
+	uint8_t              state;
+};
 
-	void     SNESReader_Init ( SNESReader * self, SNES2DB9_SetPinFunc setfunc, SNES2DB9_ReadPinFunc readfunc );
-	uint16_t SNESReader_Update ( SNESReader * self );
-	void     SNESReader_BeginRead ( SNESReader * self );
+typedef struct SNESReader SNESReader;
 
-	void DB9_SetPins ( uint8_t state, SNES2DB9_SetPinFunc setfunc );
+struct SNESMapperButtonMasks
+{
+	uint16_t fire_mask;
+	uint16_t autofire_mask;
+	uint16_t jump_mask;
+};
+
+typedef struct SNESMapperButtonMasks SNESMapperButtonMasks;
+
+struct SNESMapper
+{
+	struct SNESMapperButtonMasks button_masks;
+    uint16_t                     millis;
+    uint16_t                     autofire_cycletime_millis;
+    bool                         autofire_active;
+};
+
+typedef struct SNESMapper SNESMapper;
+
+void     SNESReader_Init ( SNESReader * self, SNES2DB9_SetPinFunc setfunc, SNES2DB9_ReadPinFunc readfunc );
+uint16_t SNESReader_Update ( SNESReader * self );
+void     SNESReader_BeginRead ( SNESReader * self );
+
+void     SNESMapper_Init ( SNESMapper * self, SNESMapperButtonMasks * button_mask_config);
+void     SNESMapper_SetAutofireDuration ( SNESMapper * self, uint16_t autofire_cycletime_millis );
+uint8_t  SNESMapper_Update ( SNESMapper * self, uint16_t snes_pin_mask, uint16_t millis_passed );
+
+
+void DB9_SetPins ( uint8_t state, SNES2DB9_SetPinFunc setfunc );
+
 
 #ifdef __cplusplus
 }
