@@ -15,6 +15,7 @@
 #include "snes2db9.h"
 
 static SNESReader reader;           /**< SNES reader instance */
+static SNESMapper mapper;           /**< SNES mapper instance */
 static uint32_t previousMillis = 0; /**< keep track of milliseconds passed */
 static uint16_t currentSNES = 0;    /**< SNES pad state as read */
 
@@ -95,6 +96,8 @@ void setupTimer1() {
 
 void setup()
 {
+    SNESMapperButtonMasks button_config;
+    
     /* setup pin states */
     for (uint8_t pin_idx = 0; pin_idx < sizeof(pin_id); pin_idx ++)
     {
@@ -107,6 +110,14 @@ void setup()
     SNESReader_Init(&reader, pin_write, pin_read);
 
     SNESReader_BeginRead(&reader);
+
+    /* initialize mapper instance */
+
+    button_config.fire_mask = SNES_BTNMASK_B;
+    button_config.jump_mask = SNES_BTNMASK_A;
+    button_config.autofire_mask = SNES_BTNMASK_Y;
+    
+    SNESMapper_Init(&mapper, &button_config);
 
     /* prepare timer interrupt for SNES polling cycle: */
     setupTimer1();
@@ -126,32 +137,7 @@ void loop()
     // schedule SNES reading in intervalls of 16ms (60Hz)
     if (millis() - previousMillis >= 16)
     {
-        uint8_t db9_btnmask = 0;
-
-        if (currentSNES & SNES_BTNMASK_Up)
-        {
-            db9_btnmask |= DB9_BTNMASK_Up;
-        }
-
-        if (currentSNES & SNES_BTNMASK_Down)
-        {
-            db9_btnmask |= DB9_BTNMASK_Down;
-        }
-
-        if (currentSNES & SNES_BTNMASK_Left)
-        {
-            db9_btnmask |= DB9_BTNMASK_Left;
-        }
-
-        if (currentSNES & SNES_BTNMASK_Right)
-        {
-            db9_btnmask |= DB9_BTNMASK_Right;
-        }
-
-        if (currentSNES & (SNES_BTNMASK_B | SNES_BTNMASK_A | SNES_BTNMASK_X | SNES_BTNMASK_Y | SNES_BTNMASK_L | SNES_BTNMASK_R))
-        {
-            db9_btnmask |= DB9_BTNMASK_Fire;
-        }
+        uint8_t db9_btnmask = SNESMapper_Update(&mapper, currentSNES, 16);
 
         DB9_SetPins(db9_btnmask, pin_write);
 
