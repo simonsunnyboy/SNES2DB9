@@ -11,6 +11,9 @@
 cmake_minimum_required(VERSION 2.8)
 project(Unittest_SNES2DB9)
 
+# reused libraries for unittest
+set(LINKEDLIBS "unittest")
+
 if( NOT CMAKE_BUILD_TYPE )
   set( CMAKE_BUILD_TYPE Coverage CACHE STRING
        "Choose the type of build, options are: None Coverage Debug Release RelWithDebInfo MinSizeRel."
@@ -20,6 +23,7 @@ endif()
 if (CMAKE_BUILD_TYPE STREQUAL "Coverage")
     message("gcov enabled")
     add_definitions("-DGCOV_ENABLED")
+	set(LINKEDLIBS ${LINKEDLIBS} "-lgcov")
 endif()
 
 
@@ -52,7 +56,7 @@ add_executable(test_snes2reader
 	${COMMONLIBDIR}/snes2db9_reader.c
     test_snes2reader.c
 )
-target_link_libraries(test_snes2reader unittest -lgcov)
+target_link_libraries(test_snes2reader ${LINKEDLIBS})
 
 # an example test object with implemented unittest for the DB9_SetPin class
 add_executable(test_setdb9
@@ -60,7 +64,7 @@ add_executable(test_setdb9
 	${COMMONLIBDIR}/snes2db9_setdb9.c
 	test_setdb9.c
 )
-target_link_libraries(test_setdb9 unittest -lgcov)
+target_link_libraries(test_setdb9 ${LINKEDLIBS})
 
 # an example test object with implemented unittest for the SNESMapper class
 add_executable(test_mapper
@@ -68,6 +72,6 @@ add_executable(test_mapper
 	${COMMONLIBDIR}/snes2db9_mapper.c
 	test_mapper.c
 )
-target_link_libraries(test_mapper unittest -lgcov)
+target_link_libraries(test_mapper ${LINKEDLIBS})
 
 
