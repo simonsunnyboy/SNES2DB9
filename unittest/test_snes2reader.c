@@ -44,7 +44,7 @@ static SNES2DB9_Pinstate unittest_get_pin ( SNES2DB9_Pin pin )
 	else
 	{
 		UT_Test ( false, "unittest_get_pin() - pin not allowed" );
-        return SNES2DB9_PIN_HIGH;
+		return SNES2DB9_PIN_HIGH;
 	}
 }
 
@@ -52,11 +52,11 @@ static SNES2DB9_Pinstate unittest_get_pin_by_pattern ( SNES2DB9_Pin pin )
 {
 	if ( pin == SNES_DATA )
 	{
-        unittest_pin_state[SNES_DATA] = SNES2DB9_PIN_HIGH;
+		unittest_pin_state[SNES_DATA] = SNES2DB9_PIN_HIGH;
 
 		if ( ( unittest_pinpattern & 0x8000 ) != 0 )
 		{
-            unittest_pin_state[SNES_DATA] = SNES2DB9_PIN_LOW;
+			unittest_pin_state[SNES_DATA] = SNES2DB9_PIN_LOW;
 		}
 
 		unittest_pinpattern <<= 1;
@@ -136,8 +136,8 @@ int main ( int argc, char **argv )
 	}
 
 	UT_TESTCASE ( "State update values" );
-    UT_DESCRIPTION ( "All keys high, no SNES buttons pressed, signals on default level" );
-    UT_TEST ( 0xFFFF == SNESReader_Update ( &reader ) );
+	UT_DESCRIPTION ( "All keys high, no SNES buttons pressed, signals on default level" );
+	UT_TEST ( 0xFFFF == SNESReader_Update ( &reader ) );
 	UT_TEST ( unittest_pin_state[SNES_LATCH] == SNES2DB9_PIN_LOW );
 	UT_TEST ( unittest_pin_state[SNES_CLK] == SNES2DB9_PIN_HIGH );
 	UT_TEST ( unittest_nr_read_pins == 16 );
