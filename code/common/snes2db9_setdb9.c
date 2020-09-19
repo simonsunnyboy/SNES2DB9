@@ -18,6 +18,13 @@
 
 #include "snes2db9.h"
 
+/**
+ * @brief   internal helper function for readability of pin update
+ * @details Pin is set to low if the bitmask is non-zero.
+ * @param   setfunc points to hardware abstraction to update hardware pins
+ * @param   pin to set
+ * @param   bitmask of DB9_BTNMASK_xxx to decode positive logic
+ */
 static void UpdateDB9Pin(SNES2DB9_SetPinFunc setfunc, SNES2DB9_Pin pin, uint8_t bitmask)
 {
     if(bitmask != 0)

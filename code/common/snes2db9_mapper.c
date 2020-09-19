@@ -18,6 +18,12 @@
 
 #include "snes2db9.h"
 
+/**
+ * @brief          internal helper function to computer autofire state based on callcycle
+ * @details        Pin states are not affected. Internal state autofire_active is calculated.
+ * @param[in, out] self points to instance of SNESMapper
+ * @param[in]      millis_passed is the number of ms passed since last call to SNESMapper_Update
+ */
 static void ComputeAutofireState ( SNESMapper * self, uint16_t millis_passed )
 {
 	assert ( self != NULL );

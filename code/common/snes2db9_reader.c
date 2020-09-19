@@ -21,20 +21,26 @@
 #include "snes2db9.h"
 
 /* states 0...31 are either latch/clock or read  */
-#define READER_ST_LATCH 0
+#define READER_ST_LATCH   0   /**< internal state to rise latch pin */
+#define READER_ST_UPDATE 32   /**< internal state to update the computed state */
+#define READER_ST_IDLE   33   /**< internal state to signalize reader is idle and state has been obtained */
 
-#define READER_ST_UPDATE 32
-#define READER_ST_IDLE 33
-
+/**
+ * @brief internal distinguishing of cycle states
+ */
 typedef enum CycleType
 {
 	IDLE,
-	LATCH,
+    LATCH,
 	CLOCK,
 	READ
 } CycleType;
 
-
+/**
+ * @brief     decodes the internal reader state into a CycleType designation
+ * @param[in] state to decode
+ * @return    cycle type according to CycleType
+ */
 static CycleType GetCycleType ( uint8_t state )
 {
 	CycleType type;
