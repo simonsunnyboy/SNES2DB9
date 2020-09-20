@@ -8,7 +8,7 @@
 # Makefile to generate graphs from .dot fiels with dot and graphviz tool
 #
 
-all: system_diagram.png
+all: system_diagram.png SNESReader_fsm.png
 
 %.png: %.dot
 	dot -Tpng -Kdot $< -o $@

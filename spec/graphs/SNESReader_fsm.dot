@@ -1,0 +1,36 @@
+/*
+ * SNES to DB9 Joystick converter
+ *
+ * (c) 2020 by Matthias Arndt <marndt@asmsoftware.de>
+ * http://www.asmsoftware.de/
+ *
+ * The MIT License applies to this software. See COPYING for details.
+ */
+
+digraph
+{
+    label="SNESReader finite state machine"; 
+    
+    /* node definitions */
+    
+    BeginRead [shape = oval; penwidth=2];
+    LATCH [shape = oval];
+    READ [shape = oval];
+    CLOCK [shape = oval];
+    UPDATE [shape = oval];
+    IDLE [shape = oval];
+    
+    /*  dependencies between nodes */
+    
+    BeginRead -> LATCH;
+    
+    LATCH -> READ [label = "cnt := 15"];
+    READ -> CLOCK [label = "if cnt > 0"];
+    CLOCK-> READ [label = "cnt := cnt - 1"];
+    READ -> UPDATE [label = "if cnt = 0"];
+    
+    UPDATE -> IDLE;
+    
+    /* group nodes */
+    { rank=same; LATCH; CLOCK; READ };
+}
