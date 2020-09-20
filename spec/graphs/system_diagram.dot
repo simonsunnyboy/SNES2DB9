@@ -1,0 +1,31 @@
+digraph
+{
+    label="SNES2DB9 Common Software Core";
+    
+    rankdir=LR; // Left to Right, instead of Top to Bottom
+    
+           
+	SNESReader -> ControlPins[label="set"];
+	DataPin -> SNESReader[label="read"];
+
+	SNESReader -> SNESMapper[label="gamepad state"];
+
+	SNESMapper -> DB9_SetPins[label="DB9 joystick state"];
+
+	DB9_SetPins -> DB9JoystickPort[label="set"];
+
+
+	/* software related nodes */
+	
+	SNESReader  [shape=box,color=red,penwidth=3];
+	SNESMapper  [shape=box,color=red,penwidth=3];
+	DB9_SetPins [shape=box,color=red,penwidth=3];
+	
+	/* hardware related nodes */
+	ControlPins [shape=polygon,sides=4,distortion=-.7,color=blue];
+	DataPin [shape=polygon,sides=4,distortion=.7,color=blue];
+	DB9JoystickPort [shape=polygon,sides=4,distortion=-.7,color=blue];
+    
+    { rank=same; ControlPins; DataPin };
+    { rank=same; SNESReader; SNESMapper; DB9_SetPins };
+}
