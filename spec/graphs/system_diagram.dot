@@ -1,11 +1,21 @@
 digraph
 {
-    label="SNES2DB9 Common Software Core";
-    
-    rankdir=LR; // Left to Right, instead of Top to Bottom
-    
+    label="SNES2DB9 Common Software Core";         
            
-	SNESReader -> ControlPins[label="set"];
+	/* software related nodes on top */
+	
+	SNESReader  [shape=box,color=red,penwidth=3];
+	SNESMapper  [shape=box,color=red,penwidth=3];
+	DB9_SetPins [shape=box,color=red,penwidth=3];
+	
+	/* hardware related nodes on bottom */
+
+	DB9JoystickPort [shape=polygon,sides=4,distortion=-.7,color=lightgrey, style = filled];
+	ControlPins [shape=polygon,sides=4,distortion=-.7,color=lightgrey, style=filled];  /* output node */
+	DataPin [shape=polygon,sides=4,distortion=.7,color=lightgrey, style=filled];       /* input node */
+    
+    /* dependencies between nodes */
+    SNESReader -> ControlPins[label="set"];
 	DataPin -> SNESReader[label="read"];
 
 	SNESReader -> SNESMapper[label="gamepad state"];
@@ -13,19 +23,8 @@ digraph
 	SNESMapper -> DB9_SetPins[label="DB9 joystick state"];
 
 	DB9_SetPins -> DB9JoystickPort[label="set"];
-
-
-	/* software related nodes */
-	
-	SNESReader  [shape=box,color=red,penwidth=3];
-	SNESMapper  [shape=box,color=red,penwidth=3];
-	DB9_SetPins [shape=box,color=red,penwidth=3];
-	
-	/* hardware related nodes */
-	ControlPins [shape=polygon,sides=4,distortion=-.7,color=blue];
-	DataPin [shape=polygon,sides=4,distortion=.7,color=blue];
-	DB9JoystickPort [shape=polygon,sides=4,distortion=-.7,color=blue];
     
-    { rank=same; ControlPins; DataPin };
+    /* group nodes */
+    { rank=same; ControlPins; DataPin; DB9JoystickPort };
     { rank=same; SNESReader; SNESMapper; DB9_SetPins };
 }
