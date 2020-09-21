@@ -10,6 +10,9 @@ set(AVR_MCU attiny84)
 # target application
 set(target_name SNES2DB9)
 
+# include directories
+include_directories(${PROJECT_SOURCE_DIR}/../common)
+
 # the SNES2DB9 core
 add_library(SNES2DB9_common
 	${PROJECT_SOURCE_DIR}/../common/snes2db9.h
