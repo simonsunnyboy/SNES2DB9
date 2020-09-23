@@ -15,7 +15,6 @@
 #include <stdint.h>
 #include <string.h>
 #include <assert.h>
-#include <avr/timer.h>
 
 #include "snes2db9.h"
 

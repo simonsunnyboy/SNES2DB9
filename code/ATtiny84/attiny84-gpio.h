@@ -93,15 +93,15 @@
 #define CLEAR_DB9RIGHT    CLEAR_BIT(PORTA, PIN2)   /**< set GPIO pin low for signal DB9RIGHT */
 #define TOGGLE_DB9RIGHT    TOGGLE_BIT(PORTA, PIN2)   /**< toggle GPIO pin for signal DB9RIGHT */
 #define READ_DB9RIGHT    (PINA & PINMASK2)   /**< read GPIO pin for signal DB9RIGHT */
-#define DB9RIGHT_PORT    PORTA   /**< GPIO port for signal DB9RIGHT */
-#define DB9RIGHT_PIN    PINMASK1   /**< GPIO pin bitmask for signal DB9RIGHT */
-#define DB9RIGHT_AS_OUTPUT    SET_BIT(DDRA, PIN1)   /**< set GPIO as push/pull output for signal DB9RIGHT */
-#define DB9RIGHT_AS_INPUT    CLEAR_BIT(DDRA, PIN1); SET_BIT(PORTA, PIN1)   /**< set GPIO as input with pullup for signal DB9RIGHT */
-#define DB9RIGHT_AS_HIGHZ    CLEAR_BIT(DDRA, PIN1); CLEAR_BIT(PORTA, PIN1)   /**< set GPIO as input High-Z without pullup for signal DB9RIGHT */
-#define SET_DB9RIGHT    SET_BIT(PORTA, PIN1)   /**< set GPIO pin high for signal DB9RIGHT */
-#define CLEAR_DB9RIGHT    CLEAR_BIT(PORTA, PIN1)   /**< set GPIO pin low for signal DB9RIGHT */
-#define TOGGLE_DB9RIGHT    TOGGLE_BIT(PORTA, PIN1)   /**< toggle GPIO pin for signal DB9RIGHT */
-#define READ_DB9RIGHT    (PINA & PINMASK1)   /**< read GPIO pin for signal DB9RIGHT */
+#define DB9FIRE_PORT    PORTA   /**< GPIO port for signal DB9FIRE */
+#define DB9FIRE_PIN    PINMASK1   /**< GPIO pin bitmask for signal DB9FIRE */
+#define DB9FIRE_AS_OUTPUT    SET_BIT(DDRA, PIN1)   /**< set GPIO as push/pull output for signal DB9FIRE */
+#define DB9FIRE_AS_INPUT    CLEAR_BIT(DDRA, PIN1); SET_BIT(PORTA, PIN1)   /**< set GPIO as input with pullup for signal DB9FIRE */
+#define DB9FIRE_AS_HIGHZ    CLEAR_BIT(DDRA, PIN1); CLEAR_BIT(PORTA, PIN1)   /**< set GPIO as input High-Z without pullup for signal DB9FIRE */
+#define SET_DB9FIRE    SET_BIT(PORTA, PIN1)   /**< set GPIO pin high for signal DB9FIRE */
+#define CLEAR_DB9FIRE    CLEAR_BIT(PORTA, PIN1)   /**< set GPIO pin low for signal DB9FIRE */
+#define TOGGLE_DB9FIRE    TOGGLE_BIT(PORTA, PIN1)   /**< toggle GPIO pin for signal DB9FIRE */
+#define READ_DB9FIRE    (PINA & PINMASK1)   /**< read GPIO pin for signal DB9FIRE */
 #define UNUSED_A0_PORT    PORTA   /**< GPIO port for signal UNUSED_A0 */
 #define UNUSED_A0_PIN    PINMASK0   /**< GPIO pin bitmask for signal UNUSED_A0 */
 #define UNUSED_A0_AS_OUTPUT    SET_BIT(DDRA, PIN0)   /**< set GPIO as push/pull output for signal UNUSED_A0 */

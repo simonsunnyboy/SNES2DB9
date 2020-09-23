@@ -22,7 +22,7 @@
  * - Signal DB9DOWN: PA4 as HIGH    Atari joystick down
  * - Signal DB9LEFT: PA3 as HIGH    Atari joystick left
  * - Signal DB9RIGHT: PA2 as HIGH    Atari joystick right
- * - Signal DB9RIGHT: PA1 as HIGH    Atari joystick fire
+ * - Signal DB9FIRE: PA1 as HIGH    Atari joystick fire
  * - Signal UNUSED_A0: PA0 as HIGHZ    unused pin
  * - Signal UNUSED_B0: PB0 as HIGHZ    unused pin
  * - Signal UNUSED_B1: PB0 as HIGHZ    unused pin
