@@ -145,6 +145,7 @@
 
 /* data direction inits: */
 #define INIT_DDRA  254  /**< ... */
+#define INIT_DDRB  0  /**< ... */
 
 /* function prototypes: */
 void InitPorts(void);
