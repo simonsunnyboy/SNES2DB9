@@ -38,7 +38,58 @@ typedef struct
 	volatile uint8_t db9_update_ready;       /**< DB9 state update occurs with given interval in ms derived from 200µs timer */
 } TaskFlags;
 
+
+
+static SNESReader Reader;
+static SNESMapper Mapper;
+static uint16_t   SNESGamepadState;
+static uint8_t    DB9State;
+
+
 static TaskFlags TaskReadiness = { 0, 0 };  /**< readiness state of tasks */
+
+static void SetPin( SNES2DB9_Pin pin, SNES2DB9_Pinstate state )
+{
+	static const uint8_t pin_mask[] =
+	{
+		LATCH_PIN,	  //SNES_LATCH
+		CLOCK_PIN,	  //SNES_CLK
+		DATA_PIN,     //SNES_DATA
+		DB9UP_PIN,    //DB9_UP
+		DB9DOWN_PIN,  //DB9_DOWN
+		DB9LEFT_PIN,  //DB9_LEFT
+		DB9RIGHT_PIN, //DB9_RIGHT
+		DB9FIRE_PIN,  //DB9_FIRE
+	};
+
+	if ( pin <= DB9_FIRE)
+	{
+		if ( state == SNES2DB9_PIN_HIGH )
+		{
+			SET_BIT(PORTA, pin_mask[pin]);
+		}
+		else
+		{
+			CLEAR_BIT(PORTA, pin_mask[pin]);
+		}
+	}
+}
+
+static SNES2DB9_Pinstate ReadPin ( SNES2DB9_Pin pin )
+{
+	SNES2DB9_Pinstate pinstate = SNES2DB9_PIN_HIGH;
+
+	if ( pin == SNES_DATA)
+	{
+		if (READ_DATA == 0)
+		{
+			pinstate = SNES2DB9_PIN_LOW;
+		}
+	}
+
+	return pinstate;
+}
+
 
 /**
  * @brief initialize TIMER0 of ATTiny84 to ~200µs ticks with internal oscillator
@@ -81,13 +132,20 @@ ISR(TIM0_COMPA_vect)
     }
 }
 
+static void InitAppl( void )
+{
+	SNESReader_Init( &Reader, SetPin, ReadPin );
+	SNESGamepadState = 0;
+
+}
+
 /**
  * @brief   updates the SNES gamepad state
  * @details The gamepad state is processed by the DB9UpdateTask()
  */
 static void ReaderTask( void )
 {
-
+	SNESGamepadState = SNESReader_Update( &Reader);
 }
 
 /**
@@ -96,7 +154,7 @@ static void ReaderTask( void )
  */
 static void DB9UpdateTask( void )
 {
-
+	SNESReader_BeginRead(&Reader);
 }
 
 /**
@@ -106,6 +164,7 @@ static void DB9UpdateTask( void )
 int main ( void )
 {
     InitPorts();
+    InitAppl();
     InitTimer0();
 
 	for ( ;; )
