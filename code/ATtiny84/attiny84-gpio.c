@@ -25,7 +25,7 @@
  * - Signal DB9FIRE: PA1 as HIGH    Atari joystick fire
  * - Signal UNUSED_A0: PA0 as HIGHZ    unused pin
  * - Signal UNUSED_B0: PB0 as HIGHZ    unused pin
- * - Signal UNUSED_B1: PB0 as HIGHZ    unused pin
+ * - Signal UNUSED_B1: PB1 as HIGHZ    unused pin
  * - Signal UNUSED_B3: PB3 as HIGHZ    unused pin
 
  */
