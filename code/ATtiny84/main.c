@@ -18,6 +18,7 @@
 
 #include <avr/io.h>
 #include <avr/interrupt.h>
+#include <avr/power.h>
 
 #include "snes2db9.h"
 #include "attiny84-gpio.h"
@@ -102,8 +103,8 @@ static void InitTimer0(void)
   TCCR0B = 0;
   TCNT0 = 0;
 
-  // 5000 Hz (1000000/((24+1)*8))
-  OCR0A = 24;
+  // 5000 Hz (4000000/((99+1)*8))
+  OCR0A = 99;
   // CTC
   TCCR0A |= (1 << WGM01);
   // Prescaler 8
@@ -163,6 +164,9 @@ static void DB9UpdateTask( void )
  */
 int main ( void )
 {
+    // configure internal clock to 4 instead of 1Mhz by changing the prescaler
+    clock_prescale_set( clock_div_2 );
+
     InitPorts();
     InitAppl();
     InitTimer0();
