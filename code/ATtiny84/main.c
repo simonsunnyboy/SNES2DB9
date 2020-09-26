@@ -38,8 +38,11 @@ typedef struct
 	volatile uint8_t db9_update_ready;       /**< DB9 state update occurs with given interval in ms derived from 200µs timer */
 } TaskFlags;
 
-static TaskFlags TaskReadiness;  /**< readiness state of tasks */
+static TaskFlags TaskReadiness = { 0, 0 };  /**< readiness state of tasks */
 
+/**
+ * @brief initialize TIMER0 of ATTiny84 to ~200µs ticks with internal oscillator
+ */
 static void InitTimer0(void)
 {
   cli();
@@ -59,12 +62,15 @@ static void InitTimer0(void)
   sei();
 }
 
+/**
+ * @brief   interrupt service routine to process 200µs updates
+ * @details Tasks are scheduled for execution from the main loop via the task readiness flags.
+ *          Flags are primed when the associated task is due.
+ */
 ISR(TIM0_COMPA_vect)
 {
     static uint16_t ticks_to_db9_update = 0;
     TaskReadiness.reader_update_ready++;
-
-    SET_LATCH;
 
     ticks_to_db9_update ++;
 
@@ -75,56 +81,44 @@ ISR(TIM0_COMPA_vect)
     }
 }
 
+/**
+ * @brief   updates the SNES gamepad state
+ * @details The gamepad state is processed by the DB9UpdateTask()
+ */
+static void ReaderTask( void )
+{
+
+}
+
+/**
+ * @brief   updates the DB9 joystick state from SNES game pad state
+ * @details The SNES reading cycle is restarted from this task.
+ */
+static void DB9UpdateTask( void )
+{
+
+}
+
+/**
+ * @brief main routine
+ * @details The necessary peripherals are updated and scheduled tasks are dispatched from the endless main loop.
+ */
 int main ( void )
 {
     InitPorts();
     InitTimer0();
 
-    uint8_t st = 0;
-
-
 	for ( ;; )
 	{
 		if ( TaskReadiness.reader_update_ready )
         {
-			CLEAR_LATCH;
+			ReaderTask();
 			TaskReadiness.reader_update_ready = 0;
 		}
 
 		if ( TaskReadiness.db9_update_ready )                                    
 		{
-			switch(st)
-			{
-			case 0:
-				CLEAR_DB9UP;
-				SET_DB9FIRE;
-				st = 1;
-				break;
-			case 1:
-				SET_DB9UP;
-				CLEAR_DB9DOWN;
-				st = 2;
-				break;
-			case 2:
-				SET_DB9DOWN;
-				CLEAR_DB9LEFT;
-				st = 3;
-				break;
-			case 3:
-				SET_DB9LEFT;
-				CLEAR_DB9RIGHT;
-				st = 4;
-				break;
-			case 4:
-				SET_DB9RIGHT;
-				CLEAR_DB9FIRE;
-				st = 0;
-				break;
-			default:
-				st = 0;
-				break;
-			};
-
+			DB9UpdateTask();
 			TaskReadiness.db9_update_ready = 0;
 		}
 	}
