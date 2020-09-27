@@ -7,7 +7,7 @@
  * The MIT License applies to this software. See COPYING for details.
  *
  * @file    main.c
- * @brief   implements the Attiny84 implementation of the SNES2DB9 project
+ * @brief   implements the ATtiny84 implementation of the SNES2DB9 project
  * @details
  *
  */
@@ -135,8 +135,21 @@ ISR(TIM0_COMPA_vect)
 
 static void InitAppl( void )
 {
+	SNESMapperButtonMasks button_config;
+    
+    /* initialize mapper instance */
+    button_config.fire_mask = SNES_BTNMASK_B;
+    button_config.jump_mask = SNES_BTNMASK_A;
+    button_config.autofire_mask = SNES_BTNMASK_Y;
+    
+    SNESMapper_Init(&Mapper, &button_config);
+
+    /* initialize reader instance */	
 	SNESReader_Init( &Reader, SetPin, ReadPin );
 	SNESGamepadState = 0;
+	
+	/* initialize DB9 handler instance */
+	DB9State = 0;
 
 }
 
@@ -155,6 +168,8 @@ static void ReaderTask( void )
  */
 static void DB9UpdateTask( void )
 {
+    DB9State = SNESMapper_Update(&Mapper, SNESGamepadState, DB9_UPDATE_TASK_CYCLE_IN_MS);
+    DB9_SetPins(DB9State, SetPin);
 	SNESReader_BeginRead(&Reader);
 }
 
