@@ -26,6 +26,7 @@
 #define NR_200US_TICKS_PER_MS (5)          /**< number of 200µs ticks per ms */
 #define DB9_UPDATE_TASK_CYCLE_IN_MS (16)   /**< number of ms for update of DB9 state */
 #define NR_200US_TICKS_DB9_UPDATE_TASK (NR_200US_TICKS_PER_MS * DB9_UPDATE_TASK_CYCLE_IN_MS)  /** number of 200µs ticks until DB9 update is triggered */
+#define STARTUP_TIME_IN_MS (3000)          /**< startup duration in ms, SNES input is ignored during startup to avoid flickery signals */
 
 /**
  * @brief   readiness flags for timed tasks
@@ -45,6 +46,7 @@ static SNESReader Reader;
 static SNESMapper Mapper;
 static uint16_t   SNESGamepadState;
 static uint8_t    DB9State;
+static uint16_t   startup_time_in_ms;
 
 
 static TaskFlags TaskReadiness = { 0, 0 };  /**< readiness state of tasks */
@@ -168,9 +170,20 @@ static void ReaderTask( void )
  */
 static void DB9UpdateTask( void )
 {
-    DB9State = SNESMapper_Update(&Mapper, SNESGamepadState, DB9_UPDATE_TASK_CYCLE_IN_MS);
-    DB9_SetPins(DB9State, SetPin);
+	/* handle startup time delay to avoid DB9 flicker on plugin of device: */
+	if( startup_time_in_ms <= STARTUP_TIME_IN_MS )
+	{
+		startup_time_in_ms += DB9_UPDATE_TASK_CYCLE_IN_MS;
+		DB9State = 0;
+	}
+	else
+	{
+		DB9State = SNESMapper_Update(&Mapper, SNESGamepadState, DB9_UPDATE_TASK_CYCLE_IN_MS);	
+	}
+	    
+    DB9_SetPins(DB9State, SetPin);        
 	SNESReader_BeginRead(&Reader);
+		
 }
 
 /**

@@ -15,7 +15,7 @@
 #ifndef VERSION_H
 	#define VERSION_H
 	
-	#define SWVERSION "V0.9.3"
+	#define SWVERSION "V0.9.4"
 	
 	#define COPYRIGHTSTR "SNES2DB9 ATtiny84 " SWVERSION " - (c) 2020 by Matthias Arndt <marndt@asmsoftware.de> Build: " __TIME__ "-" __DATE__
 	
