@@ -22,7 +22,6 @@
 
 #include "snes2db9.h"
 #include "attiny84-gpio.h"
-#include "version.h"
 
 #define NR_200US_TICKS_PER_MS (5)          /**< number of 200µs ticks per ms */
 #define DB9_UPDATE_TASK_CYCLE_IN_MS (16)   /**< number of ms for update of DB9 state */
@@ -189,6 +188,3 @@ int main ( void )
 
 	return 0;
 }
-
-/* provide copyright message in FLASH: */
-static const char Copyright[] __attribute__((used,progmem))  = COPYRIGHTSTR;
