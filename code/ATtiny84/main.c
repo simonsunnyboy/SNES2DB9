@@ -145,6 +145,7 @@ static void InitAppl( void )
     button_config.autofire_mask = SNES_BTNMASK_Y;
     
     SNESMapper_Init(&Mapper, &button_config);
+    SNESMapper_SetAutofireDuration(&Mapper, DB9_UPDATE_TASK_CYCLE_IN_MS);
 
     /* initialize reader instance */	
 	SNESReader_Init( &Reader, SetPin, ReadPin );
