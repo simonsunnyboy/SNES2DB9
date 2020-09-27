@@ -98,12 +98,22 @@ macro(add_avr_executable target_name)
 
 		DEPENDS ${elf_file}
 	)
+	
+	# output fuse settings
+	add_custom_command(
+		OUTPUT "print-fuse-${elf_file}"
+
+		COMMAND
+			${CMAKE_OBJDUMP}  -s -j .fuse ${elf_file}
+
+		DEPENDS ${elf_file}
+	)
 
 	# build the intel hex file for the device
 	add_custom_target(
 		${target_name}
 		ALL
-		DEPENDS ${hex_file} ${lst_file} "print-size-${elf_file}"
+		DEPENDS ${hex_file} ${lst_file} "print-size-${elf_file}" "print-fuse-${elf_file}"
 	)
 
 	set_target_properties(
