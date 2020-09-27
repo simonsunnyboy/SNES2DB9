@@ -24,6 +24,7 @@ add_library(SNES2DB9_common
 # the program
 add_avr_executable(${target_name}
 	main.c
+	version.h
 	attiny84-gpio.c
 	attiny84-gpio.h
 )
