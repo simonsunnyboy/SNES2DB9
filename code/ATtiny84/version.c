@@ -1,5 +1,5 @@
 /**
- * SNES to DB9 Joystick converter
+ * SNES to DB9 Joystick converter (ATtiny84 implementation)
  *
  * (c) 2020 by Matthias Arndt <marndt@asmsoftware.de>
  * http://www.asmsoftware.de/
@@ -17,7 +17,7 @@
 
 /**
  *  @brief add fuse information to ELF file
- *  @details The fuse information can be extracted with avr-objdump -s -j .fuse <ELF file>
+ *  @details The fuse information can be extracted with $ avr-objdump -s -j .fuse <ELF file>
  */
 FUSES = 
 {
@@ -26,5 +26,7 @@ FUSES =
     .extended = 0xff,
 };
  
-/* provide copyright message in FLASH: */
+/**
+ * @brief provide copyright message in FLASH
+ */
 static const char Copyright[] __attribute__((used,progmem))  = COPYRIGHTSTR;
