@@ -12,12 +12,17 @@
  *
  */
  
+/** 
+ * @addtogroup SNES2DB_ATtiny84 
+ * @{
+ */ 
+ 
 #include "version.h"
 #include <avr/io.h>
 
 /**
  *  @brief add fuse information to ELF file
- *  @details The fuse information can be extracted with $ avr-objdump -s -j .fuse <ELF file>
+ *  @details The fuse information can be extracted with $ avr-objdump -s -j .fuse ELF-file
  */
 FUSES = 
 {
@@ -30,3 +35,5 @@ FUSES =
  * @brief provide copyright message in FLASH
  */
 static const char Copyright[] __attribute__((used,progmem))  = COPYRIGHTSTR;
+
+/** @} */

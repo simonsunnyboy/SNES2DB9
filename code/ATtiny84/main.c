@@ -1,4 +1,6 @@
 /**
+ * @mainpage
+ * 
  * SNES to DB9 Joystick converter (ATtiny84 implementation)
  *
  * (c) 2020 by Matthias Arndt <marndt@asmsoftware.de>
@@ -11,6 +13,11 @@
  * @details
  *
  */
+ 
+/** 
+ * @addtogroup SNES2DB_ATtiny84 
+ * @{
+ */ 
 
 #include <stdint.h>
 #include <string.h>
@@ -25,7 +32,7 @@
 
 #define NR_200US_TICKS_PER_MS (5)          /**< number of 200µs ticks per ms */
 #define DB9_UPDATE_TASK_CYCLE_IN_MS (16)   /**< number of ms for update of DB9 state */
-#define NR_200US_TICKS_DB9_UPDATE_TASK (NR_200US_TICKS_PER_MS * DB9_UPDATE_TASK_CYCLE_IN_MS)  /** number of 200µs ticks until DB9 update is triggered */
+#define NR_200US_TICKS_DB9_UPDATE_TASK (NR_200US_TICKS_PER_MS * DB9_UPDATE_TASK_CYCLE_IN_MS)  /**< number of 200µs ticks until DB9 update is triggered */
 #define STARTUP_TIME_IN_MS (3000)          /**< startup duration in ms, SNES input is ignored during startup to avoid flickery signals */
 
 /**
@@ -221,3 +228,6 @@ int main ( void )
 
 	return 0;
 }
+
+/** @} */
+
