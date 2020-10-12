@@ -19,17 +19,17 @@ void setup() {
 
     for (int i = 0; i < MAX_SIGNALS; i++)
     {
-        pinMode(db9_signal_pin[i], OUTPUT);
-        digitalWrite(db9_signal_pin[i], 1);
+        pinMode(db9_signal_pin[i], INPUT);
     }
 
 }
 
 void loop() {
     // put your main code here, to run repeatedly:
+    pinMode(db9_signal_pin[current_pin_active], OUTPUT);
     digitalWrite(db9_signal_pin[current_pin_active], 0);
     delay(100);
-    digitalWrite(db9_signal_pin[current_pin_active], 1);
+    pinMode(db9_signal_pin[current_pin_active], INPUT);
     delay(900);
 
     current_pin_active++;

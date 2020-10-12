@@ -45,12 +45,18 @@ void pin_write ( SNES2DB9_Pin pin, SNES2DB9_Pinstate state )
 {
     if (pin <= DB9_FIRE)
     {
-        if (state == SNES2DB9_PIN_HIGH)
+		if (state == SNES2DB9_PIN_HIGHZ)
         {
+			pinMode(pin_id[pin], INPUT);
+        }
+        else if (state == SNES2DB9_PIN_HIGH)
+        {
+			pinMode(pin_id[pin], OUTPUT);
             digitalWrite(pin_id[pin], 1);
         }
         else
         {
+			pinMode(pin_id[pin], OUTPUT);
             digitalWrite(pin_id[pin], 0);
         }
     }
