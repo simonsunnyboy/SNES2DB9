@@ -6,12 +6,6 @@
  * @author Matthias Arndt <marndt@asmsoftware.de>
  * @see http://www.final-memory.org/?p=2687
  */
- 
-/** 
- * @addtogroup SNES2DB_ATtiny84_GPIO
- * @{
- */  
- 
 #ifndef ATTINY84GPIOH_H
 #define ATTINY84GPIOH_H
 /* User preprocessor directives: */
@@ -158,15 +152,14 @@
 
 
 /* port inits: */
-#define INIT_PORTA  190  /**< ... */
+#define INIT_PORTA  128  /**< ... */
 #define INIT_PORTB  4  /**< ... */
 
 /* data direction inits: */
-#define INIT_DDRA  254  /**< ... */
+#define INIT_DDRA  192  /**< ... */
 #define INIT_DDRB  0  /**< ... */
 
 /* function prototypes: */
-void InitPorts ( void );
+void InitPorts(void);
 #endif
 
-/** @} */

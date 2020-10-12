@@ -21,7 +21,7 @@
 #ifndef VERSION_H
     #define VERSION_H
 
-    #define SWVERSION "V0.9.5"  /**< software version information for ATtiny84 implementation */
+    #define SWVERSION "V0.9.6"  /**< software version information for ATtiny84 implementation */
 
 	/**
 	 * @brief copyright string to embed into FLASH

@@ -78,12 +78,18 @@ static void SetPin ( SNES2DB9_Pin pin, SNES2DB9_Pinstate state )
 
 	if ( pin <= DB9_FIRE )
 	{
-		if ( state == SNES2DB9_PIN_HIGH )
+		if ( state == SNES2DB9_PIN_HIGHZ )
 		{
+			CLEAR_BIT ( DDRA, pin_mask[pin]);
+		}
+		else if ( state == SNES2DB9_PIN_HIGH )
+		{
+			SET_BIT ( DDRA, pin_mask[pin]);
 			SET_BIT ( PORTA, pin_mask[pin] );
 		}
 		else
 		{
+			SET_BIT ( DDRA, pin_mask[pin]);
 			CLEAR_BIT ( PORTA, pin_mask[pin] );
 		}
 	}
