@@ -66,7 +66,8 @@ extern "C"
 enum SNES2DB9_Pinstate
 {
     SNES2DB9_PIN_LOW,
-	SNES2DB9_PIN_HIGH
+    SNES2DB9_PIN_HIGH,
+    SNES2DB9_PIN_HIGHZ
 };
 
 typedef enum SNES2DB9_Pinstate SNES2DB9_Pinstate; /**< see enum SNES2DB9_Pinstate */

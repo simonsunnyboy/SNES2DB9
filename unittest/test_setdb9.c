@@ -35,9 +35,9 @@ static void append_pin_state ( char *deststr, char *prefix, SNES2DB9_Pinstate pi
 {
 	strcat ( deststr, prefix );
 
-	if ( pin_state == SNES2DB9_PIN_HIGH )
+    if ( pin_state == SNES2DB9_PIN_HIGHZ )
 	{
-		strcat ( deststr, "HIGH " );
+        strcat ( deststr, "HIGHZ " );
 	}
 	else if ( pin_state == SNES2DB9_PIN_LOW )
 	{
@@ -117,11 +117,11 @@ int main ( int argc, char **argv )
 		uint8_t db9_state = 0;
 		strcpy ( tmpstr, "Expected pins to be low: " );
 		UT_TESTCASE ( tcs[idx].testcase_desc );
-		ut_expected_pinstate[DB9_UP] = SNES2DB9_PIN_HIGH;
-		ut_expected_pinstate[DB9_DOWN] = SNES2DB9_PIN_HIGH;
-		ut_expected_pinstate[DB9_LEFT] = SNES2DB9_PIN_HIGH;
-		ut_expected_pinstate[DB9_RIGHT] = SNES2DB9_PIN_HIGH;
-		ut_expected_pinstate[DB9_FIRE] = SNES2DB9_PIN_HIGH;
+        ut_expected_pinstate[DB9_UP] = SNES2DB9_PIN_HIGHZ;
+        ut_expected_pinstate[DB9_DOWN] = SNES2DB9_PIN_HIGHZ;
+        ut_expected_pinstate[DB9_LEFT] = SNES2DB9_PIN_HIGHZ;
+        ut_expected_pinstate[DB9_RIGHT] = SNES2DB9_PIN_HIGHZ;
+        ut_expected_pinstate[DB9_FIRE] = SNES2DB9_PIN_HIGHZ;
 
 		/* configure test input and expected outcome: */
 		if ( tcs[idx].up )

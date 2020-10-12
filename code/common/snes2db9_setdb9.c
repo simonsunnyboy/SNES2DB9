@@ -33,7 +33,7 @@ static void UpdateDB9Pin(SNES2DB9_SetPinFunc setfunc, SNES2DB9_Pin pin, uint8_t 
     }
     else
     {
-        setfunc(pin, SNES2DB9_PIN_HIGH);
+        setfunc(pin, SNES2DB9_PIN_HIGHZ);
     }
 }
 
